@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Free Mobile OTP Verification</title>
+</head>
+
+<body>
+  <h3>Mobile OTP Verification (FREE)</h3>
+
+  <input type="text" id="phone" placeholder="+91XXXXXXXXXX">
+  <button id="sendBtn">Send OTP</button><br><br>
+
+  <input type="text" id="otp" placeholder="Enter OTP">
+  <button id="verifyBtn">Verify OTP</button>
+
+  <div id="recaptcha-container"></div>
+
+<script type="module">
+  // 🔹 Firebase imports (MODULAR)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { 
+    getAuth, 
+    RecaptchaVerifier, 
+    signInWithPhoneNumber 
+  } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+  // 🔹 Your Firebase config (correct आहे 👍)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDGESZZohV6FbSQwLTo_H3FPNKIrr-OtW4",
+    authDomain: "authentication-f651e.firebaseapp.com",
+    projectId: "authentication-f651e",
+    storageBucket: "authentication-f651e.firebasestorage.app",
+    messagingSenderId: "462856822072",
+    appId: "1:462856822072:web:8b5947a1044dd0099175cd"
+  };
+
+  // 🔹 Init Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  let confirmationResult;
+
+  // 🔹 Recaptcha setup (FREE)
+  window.recaptchaVerifier = new RecaptchaVerifier(
+    auth,
+    'recaptcha-container',
+    { size: 'invisible' }
+  );
+
+  // 🔹 Send OTP
+  document.getElementById("sendBtn").onclick = () => {
+    const phone = document.getElementById("phone").value;
+
+    signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
+      .then((result) => {
+        confirmationResult = result;
+        alert("✅ OTP SMS ने पाठवला आहे");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  // 🔹 Verify OTP
+  document.getElementById("verifyBtn").onclick = () => {
+    const code = document.getElementById("otp").value;
+
+    confirmationResult.confirm(code)
+      .then(() => {
+        alert("🎉 Mobile Number Verified (FREE)");
+      })
+      .catch(() => {
+        alert("❌ Wrong OTP");
+      });
+  };
+</script>
+
+</body>
+</html>
