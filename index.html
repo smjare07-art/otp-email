@@ -7,10 +7,13 @@
     body {
       font-family: Arial;
       background: #f2f2f2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     .box {
       width: 320px;
-      margin: 100px auto;
+      margin: 100px auto 20px;
       background: #fff;
       padding: 20px;
       border-radius: 10px;
@@ -27,6 +30,16 @@
       color: white;
       border: none;
       cursor: pointer;
+    }
+
+    
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 10px;
+      background: #e6e6e6;
+      font-size: 14px;
+      color: #555;
     }
   </style>
 </head>
@@ -45,6 +58,11 @@
 
   <p id="msg"></p>
 </div>
+
+
+<footer>
+  Developed by <strong>TS18</strong>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script src="script.js"></script>
